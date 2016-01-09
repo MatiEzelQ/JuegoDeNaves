@@ -201,8 +201,9 @@ class Lamina extends JPanel implements KeyListener{
             naveEne.atacar();
 
             if(bolaEnemiga.getY() >= nave.getY()){//Cambiar por fin de lamina.que no se cual es xddd
-                 bolaEnemiga.setX(naveEne.getX());
+                bolaEnemiga.setX(naveEne.getX());
                 bolaEnemiga.setY(naveEne.getY());
+                bolaEnemiga.setInicio(true);
             }
             repaint();
             limites();
@@ -213,9 +214,6 @@ class Lamina extends JPanel implements KeyListener{
 
 
 
-
-
-adsadsads
 
 }
 
@@ -271,7 +269,10 @@ class NaveEnemiga{
        // if(azar == 1){
            // if(this.clase == 1){
                 setDaño(15);
-                bola.setX(getX());
+                if(bola.getInicio() == true) {
+                    bola.setX(getX());
+                    bola.setInicio(false);
+                }
                 bola.setY(bola.getY()+10);
 
                 bola.setAltura(20);
