@@ -177,6 +177,24 @@ class Lamina extends JPanel implements KeyListener{
 
     }
 
+    public void controlarAtaque(){
+
+        if(bolaAliada.getX() == naveEne.getX() || bolaAliada.getY() == naveEne.getY()){
+            naveEne.setVida(naveEne.getVida()-nave.getDaño());
+            System.out.println(naveEne.getVida() + "----Maatias le metiste daño.");
+        }else{
+            //Le erraste! :D (label o algo).
+        }
+
+        if(bolaEnemiga.getX() == nave.getX() || bolaEnemiga.getY() == nave.getY()){
+            nave.setVida(nave.getVida()-naveEne.getDaño());
+            System.out.println(nave.getVida() + "----Maatias te metieron daño.");
+        }else{
+            //le erró.
+        }
+
+    }
+
     private class Timertask1 extends TimerTask{
 
         public void run(){
@@ -189,6 +207,7 @@ class Lamina extends JPanel implements KeyListener{
                 cancel();
             }
             limites();
+            controlarAtaque();
         }
 
 
@@ -200,13 +219,14 @@ class Lamina extends JPanel implements KeyListener{
             naveEne.mover();
             naveEne.atacar();
 
-            if(bolaEnemiga.getY() >= nave.getY()){//Cambiar por fin de lamina.que no se cual es xddd
+            if(bolaEnemiga.getY() >= Utilitaria.getScreen(2)-260){
                 bolaEnemiga.setX(naveEne.getX());
                 bolaEnemiga.setY(naveEne.getY());
                 bolaEnemiga.setInicio(true);
             }
             repaint();
             limites();
+            controlarAtaque();
         }
 
 
