@@ -58,7 +58,7 @@ class Lamina extends JPanel implements KeyListener{
 
         cargarImagenes();
 
-        timer2.scheduleAtFixedRate(new Timertask2(),1000,120);
+        timer2.scheduleAtFixedRate(new Timertask2(),1000,100);
     }
 
     public void crearEnemigos(Graphics gra){
@@ -140,7 +140,7 @@ class Lamina extends JPanel implements KeyListener{
 
 
 
-            timer1.scheduleAtFixedRate(new Timertask1(),0,150);
+            timer1.scheduleAtFixedRate(new Timertask1(),0,50);
             repaint();
        }
 
@@ -178,22 +178,8 @@ class Lamina extends JPanel implements KeyListener{
     }
 
     public void controlarAtaque(){
-
+//CONTROLA QUIEN METIO DAÑO----------
         int distancia = 5;
-
-     /*   if(bolaAliada.getX() == naveEne.getX() && bolaAliada.getY() == naveEne.getY()){
-            naveEne.setVida(naveEne.getVida()-nave.getDaño());
-            System.out.println(naveEne.getVida() + "----Maatias le metiste daño.");
-        }else{
-            //Le erraste! :D (label o algo).
-        }
-
-        if(bolaEnemiga.getX() == nave.getX() && bolaEnemiga.getY() == nave.getY()){
-            nave.setVida(nave.getVida()-naveEne.getDaño());
-            System.out.println(nave.getVida() + "----Maatias te metieron daño.");
-        }else{
-            //le erró.
-        }*/
 
         if(bolaAliada.getX() - naveEne.getX() <= distancia && bolaAliada.getX() - naveEne.getX() >= -distancia && bolaAliada.getY() - naveEne.getY() <= distancia && bolaAliada.getY() - naveEne.getY() >= -distancia){
             naveEne.setVida(naveEne.getVida()-nave.getDaño());
@@ -202,6 +188,14 @@ class Lamina extends JPanel implements KeyListener{
         if(bolaEnemiga.getX() - nave.getX() <= distancia && bolaEnemiga.getX() - nave.getX() >= -distancia && bolaEnemiga.getY() - nave.getY() <= distancia && bolaEnemiga.getY() - nave.getY() >= -distancia){
             nave.setVida(nave.getVida()-naveEne.getDaño());
             System.out.println(nave.getVida() + "----Maatias te metieron daño.");
+        }
+
+//CONTROLA QUIEN MUERE------------
+
+        if(nave.getVida() <= 0){
+            nave.setMuerte(true);
+        }else if(naveEne.getVida() <= 0){
+            naveEne.setMuerte(true);
         }
 
 
@@ -240,6 +234,13 @@ class Lamina extends JPanel implements KeyListener{
             repaint();
             limites();
             controlarAtaque();
+
+            if(nave.getMuerte() == true){
+                cancel();
+            }else if(naveEne.getMuerte() == true){
+
+            }
+
         }
 
 
@@ -260,6 +261,7 @@ class NaveEnemiga{
     private static Nave nave = Nave.getInstance();
     private static NaveEnemiga NaveEne;
 
+    protected boolean muerte = false;
     protected int vida;
     protected int daño;
     protected int clase;
@@ -431,6 +433,14 @@ class NaveEnemiga{
     public void setAnchura(int anchura) {
         this.anchura = anchura;
     }
+
+    public boolean getMuerte() {
+        return muerte;
+    }
+
+    public void setMuerte(boolean muerte) {
+        this.muerte = muerte;
+    }
 }
 
 class Nave{
@@ -443,6 +453,7 @@ class Nave{
     protected int altura;
     protected int anchura;
     protected int velocidad;
+    protected boolean muerte = false;
 
     private Nave(){
         vida = 100;
@@ -519,8 +530,13 @@ class Nave{
         this.velocidad = velocidad;
     }
 
+    public boolean getMuerte() {
+        return muerte;
+    }
 
-
+    public void setMuerte(boolean muerte) {
+        this.muerte = muerte;
+    }
 }
 
 class BolaDeFuegoAliada{
