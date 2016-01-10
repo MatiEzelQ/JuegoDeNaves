@@ -179,19 +179,32 @@ class Lamina extends JPanel implements KeyListener{
 
     public void controlarAtaque(){
 
-        if(bolaAliada.getX() == naveEne.getX() || bolaAliada.getY() == naveEne.getY()){
+        int distancia = 5;
+
+     /*   if(bolaAliada.getX() == naveEne.getX() && bolaAliada.getY() == naveEne.getY()){
             naveEne.setVida(naveEne.getVida()-nave.getDaño());
             System.out.println(naveEne.getVida() + "----Maatias le metiste daño.");
         }else{
             //Le erraste! :D (label o algo).
         }
 
-        if(bolaEnemiga.getX() == nave.getX() || bolaEnemiga.getY() == nave.getY()){
+        if(bolaEnemiga.getX() == nave.getX() && bolaEnemiga.getY() == nave.getY()){
             nave.setVida(nave.getVida()-naveEne.getDaño());
             System.out.println(nave.getVida() + "----Maatias te metieron daño.");
         }else{
             //le erró.
+        }*/
+
+        if(bolaAliada.getX() - naveEne.getX() <= distancia && bolaAliada.getX() - naveEne.getX() >= -distancia && bolaAliada.getY() - naveEne.getY() <= distancia && bolaAliada.getY() - naveEne.getY() >= -distancia){
+            naveEne.setVida(naveEne.getVida()-nave.getDaño());
+            System.out.println(naveEne.getVida() + "----Maatias le metiste daño.");
         }
+        if(bolaEnemiga.getX() - nave.getX() <= distancia && bolaEnemiga.getX() - nave.getX() >= -distancia && bolaEnemiga.getY() - nave.getY() <= distancia && bolaEnemiga.getY() - nave.getY() >= -distancia){
+            nave.setVida(nave.getVida()-naveEne.getDaño());
+            System.out.println(nave.getVida() + "----Maatias te metieron daño.");
+        }
+
+
 
     }
 
