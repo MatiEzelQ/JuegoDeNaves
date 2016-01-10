@@ -36,6 +36,10 @@ class Ventana extends JFrame {
 
 class Lamina extends JPanel implements KeyListener{
 
+    JLabel victoriaDerrota = new JLabel("¿Quien ganará?");
+    JLabel vidaNave = new JLabel("Vos: 100        ");
+    JLabel vidaNaveEne = new JLabel("       Enemigo: 100");
+
     Timer timer1 = new Timer();
     Timer timer2 = new Timer();
 
@@ -56,9 +60,34 @@ class Lamina extends JPanel implements KeyListener{
     public Lamina(){
         setBounds(0,0,Utilitaria.getScreen(1)/2,Utilitaria.getScreen(2)/2);
 
+        cargarLabels();
         cargarImagenes();
 
         timer2.scheduleAtFixedRate(new Timertask2(),1000,100);
+    }
+
+    public void cargarLabels(){
+
+        add(vidaNave);
+        vidaNave.setForeground(Color.red);
+
+        add(victoriaDerrota);
+        victoriaDerrota.setForeground(Color.red);
+
+        add(vidaNaveEne);
+        vidaNaveEne.setForeground(Color.red);
+
+    }
+
+    public void cargarVictoria_Derrota(){
+        if(nave.getMuerte() == true){
+            victoriaDerrota.setFont(new Font("Arial",Font.ITALIC,36));
+            victoriaDerrota.setText("Perdiste!!!!");
+        }else if(naveEne.getMuerte() == true){
+            victoriaDerrota.setFont(new Font("Arial",Font.ITALIC,36));
+            victoriaDerrota.setText("Ganaste!!!!");
+        }
+
     }
 
     public void crearEnemigos(Graphics gra){
@@ -183,11 +212,13 @@ class Lamina extends JPanel implements KeyListener{
 
         if(bolaAliada.getX() - naveEne.getX() <= distancia && bolaAliada.getX() - naveEne.getX() >= -distancia && bolaAliada.getY() - naveEne.getY() <= distancia && bolaAliada.getY() - naveEne.getY() >= -distancia){
             naveEne.setVida(naveEne.getVida()-nave.getDaño());
-            System.out.println(naveEne.getVida() + "----Maatias le metiste daño.");
+            vidaNaveEne.setText("       Enemigo: " + naveEne.getVida());
+
         }
         if(bolaEnemiga.getX() - nave.getX() <= distancia && bolaEnemiga.getX() - nave.getX() >= -distancia && bolaEnemiga.getY() - nave.getY() <= distancia && bolaEnemiga.getY() - nave.getY() >= -distancia){
             nave.setVida(nave.getVida()-naveEne.getDaño());
-            System.out.println(nave.getVida() + "----Maatias te metieron daño.");
+            vidaNave.setText("Vos: " + nave.getVida()+"     ");
+
         }
 
 //CONTROLA QUIEN MUERE------------
