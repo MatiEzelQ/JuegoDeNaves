@@ -257,6 +257,7 @@ class NaveEnemiga{
 
     BolaDeFuegoEnemiga bola = BolaDeFuegoEnemiga.getInstance();
 
+    private static Nave nave = Nave.getInstance();
     private static NaveEnemiga NaveEne;
 
     protected int vida;
@@ -344,11 +345,31 @@ class NaveEnemiga{
 
         int azar = (int)(Math.random()*100);
 
-        if(azar <=49){
+ /*       if(azar <=49){
             setX(getX()+10);
         }else{
             setX(getX()-10);
         }
+*/
+        if(azar <= 38){//Movimiento común.
+            int azar2 = (int)(Math.random()*100);
+
+            if(azar2 <=49){
+                setX(getX()+10);
+            }else{
+                setX(getX()-10);
+            }
+        }else{//Movimiento inteligente.
+            if(nave.getX() < getX()){
+                setX(getX()-10);
+            }else if(nave.getX() > getX()){
+                setX(getX()+10);
+            }//No use el else, porque si están en la misma x quiero que dispare justo a la nave del jugador
+
+
+        }
+
+
 
     }
 
